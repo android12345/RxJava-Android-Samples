@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.morihacky.android.rxjava.R;
 import com.morihacky.android.rxjava.rxbus.RxBusDemoFragment;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import com.morihacky.android.rxjava.volley.VolleyDemoFragment;
 
 public class MainFragment
       extends BaseFragment {
@@ -20,8 +23,14 @@ public class MainFragment
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.inject(this, layout);
+        ButterKnife.bind(this, layout);
         return layout;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @OnClick(R.id.btn_demo_schedulers)
@@ -42,6 +51,11 @@ public class MainFragment
     @OnClick(R.id.btn_demo_retrofit)
     void demoRetrofitCalls() {
         clickedOn(new RetrofitFragment());
+    }
+
+    @OnClick(R.id.btn_demo_polling)
+    void demoPolling() {
+        clickedOn(new PollingFragment());
     }
 
     @OnClick(R.id.btn_demo_double_binding_textview)
@@ -78,6 +92,11 @@ public class MainFragment
     void demoRotationPersist() {
         clickedOn(new RotationPersist2Fragment());
         //clickedOn(new RotationPersist1Fragment());
+    }
+
+    @OnClick(R.id.btn_demo_volley)
+    void demoVolleyRequest() {
+        clickedOn(new VolleyDemoFragment());
     }
 
     private void clickedOn(@NonNull Fragment fragment) {
